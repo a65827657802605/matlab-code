@@ -82,8 +82,8 @@ for i = 1:n_coordinates
     Ey1                     = Ey - AB;
     BE                      = sqrt( Ex^2 + Ey1^2 );
 
-    Z                       = pi / 2 - acos( Dx / CD );
-    X                       = pi / 2 - atan2( Ex, Ey1 ) - acos( (BG^2 + BE^2 - GE^2) / 2 / BG / BE);
+    Z                       = asin( Dy1 / CD );
+    X                       = atan2( Ex, Ey1 ) - acos( (BG^2 + BE^2 - GE^2) / 2 / BG / BE);
 
     %%
     %Check if constraints are met
