@@ -77,7 +77,7 @@ for i = 1:n_coordinates
     Dy1                     = Dy - (AB - AC);
     phi4                    = atan2( Dy - h - gripper_length, r - Dx);
     Ex                      = r - EF * sin(phi4);
-    Ey                      = EF * cos(phi4) - h;
+    Ey                      = EF * cos(phi4) + h;
 
     Ey1                     = Ey - AB;
     BE                      = sqrt( Ex^2 + Ey1^2 );
