@@ -117,8 +117,8 @@ waypoints               = zeros(3, n_coordinates);             %[R, X, Z]
 %%
 %Updating the model parameters
 
-waypoints           = [0 0 0 0; 0.025113778764355 0.025113778764355 0.025113778764355 0.025113778764355; 0.5 0.5 0.5 0.5];
-times               = [0 6 12 18];
+waypoints           = [ 0 0 1 1; 0.3 0.3 0.3 0.3; 0 0 0 0];
+times               = [0 0.99 1 5];
 
 waypointTimes       = times;                                    
 endtime             = times(length(times));                         %time at which all movement (nominally) stops
