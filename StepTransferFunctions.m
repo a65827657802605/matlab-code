@@ -1,6 +1,7 @@
 
-SimulationTime      = 5;
+SimulationTime      = 30;
 times               = [0:Ts:SimulationTime];
+OneHundredlimit     = 3003;
 
 %R axis
 waypoints           = [ 0 0 1 1; 0.3 0.3 0.3 0.3; 0 0 0 0];
@@ -31,11 +32,10 @@ sim('RobotArm.slx')
                        length(InputLog{1}.Values.Data(:,1)), ...
                        fs);
                 
-RtfUntruncated          = idfrd( real(Rtransfer), imag(Rtransfer), SimulationTime );
-                   
-Rtf                     = tfest(RtfUntruncated,2,1); 
-Rtf3rdOrder             = tfest(RtfUntruncated,3,2); 
-Rtf4thOrder             = tfest(RtfUntruncated,4,3); 
+RtfUntruncated          = idfrd( real(Rtransfer(1:OneHundredlimit)), imag(Rtransfer(1:OneHundredlimit)), SimulationTime );
+
+Rtf2zeroes              = tfest(RtfUntruncated,4,2);
+Rtf3zeroes              = tfest(RtfUntruncated,4,3);
 
 outR                    = OutputLog{1}.Values.Data;
 
@@ -45,11 +45,11 @@ title("Transfer function in the R axis");
 xlabel("Frequency [Hz]");
 ylabel("Gain [dB]");
 
-plot(times,outR(:,1))
-title("Response to step function R axis (d = 0.01 s)");
-xlabel("Time [s]");
-ylabel("R angle [radians]");
-%bode(Rtf, fs * 2 * pi);
+% plot(times,outR(:,1))
+% title("Response to step function R axis (d = 0.01 s)");
+% xlabel("Time [s]");
+% ylabel("R angle [radians]");
+% bode(Rtf, fs * 2 * pi);
 % title("R axis response transfer function");
 % hold off
 % 
@@ -95,11 +95,10 @@ sim('RobotArm.slx')
                        length(InputLog{1}.Values.Data(:,2)), ...
                        fs);
                    
-XtfUntruncated          = idfrd( real(Xtransfer), imag(Xtransfer), SimulationTime );
-                   
-Xtf                     = tfest(XtfUntruncated,2,1);        
-Xtf3rdOrder             = tfest(XtfUntruncated,3,2); 
-Xtf4thOrder             = tfest(XtfUntruncated,4,3);       
+XtfUntruncated          = idfrd( real(Xtransfer(1:OneHundredlimit)), imag(Xtransfer(1:OneHundredlimit)), SimulationTime );
+
+Xtf2zeroes              = tfest(XtfUntruncated,4,2);
+Xtf3zeroes              = tfest(XtfUntruncated,4,3);
 
 outX                    = OutputLog{1}.Values.Data;
 
@@ -109,28 +108,6 @@ title("Transfer function in the X axis");
 xlabel("Frequency [Hz]");
 ylabel("Gain [dB]");
 
-plot(times,outX(:,2))
-title("Response to step function X axis (d = 0.01 s)");
-xlabel("Time [s]");
-ylabel("X angle [radians]");
-%bode(Xtf, fs * 2 * pi);
-% 
-% plot(Xtransfer)
-% title("X axis response transfer function");
-% hold off
-% 
-% plot(InputLog{1}.Values.Data(:,2))
-% hold on
-% plot(OutputLog{1}.Values.Data(:,2))
-% legend("Input","Output")
-% title("X step function response")
-% hold off
-% 
-% 
-% 
-% %bode(Rtf)
-% %nyquist(Rtf)
-% 
 %%
 %Z axis
 waypoints           = [ 0 0 0 0; 0.3 0.3 0.3 0.3; -0.35 -0.35 0.25 0.25];
@@ -160,12 +137,11 @@ sim('RobotArm.slx')
                        0, ...
                        length(InputLog{1}.Values.Data(:,3)), ...
                        fs);
-                   
-ZtfUntruncated          = idfrd( real(Ztransfer), imag(Ztransfer), SimulationTime );
-                   
-Ztf                     = tfest(ZtfUntruncated,2,1);        
-Ztf3rdOrder             = tfest(ZtfUntruncated,3,2); 
-Ztf4thOrder             = tfest(ZtfUntruncated,4,3); 
+
+ZtfUntruncated          = idfrd( real(Ztransfer(1:OneHundredlimit)), imag(Ztransfer(1:OneHundredlimit)), SimulationTime );
+
+Ztf2zeroes              = tfest(ZtfUntruncated,4,2);
+Ztf3zeroes              = tfest(ZtfUntruncated,4,3);
 
 outZ                    = OutputLog{1}.Values.Data;
 
@@ -174,25 +150,3 @@ semilogx(Zfrequencies, 10*log10(Ztransfer))
 title("Transfer function in the Z axis");
 xlabel("Frequency [Hz]");
 ylabel("Gain [dB]");
-
-plot(times,outZ(:,3))
-title("Response to step function Z axis (d = 0.01 s)");
-xlabel("Time [s]");
-ylabel("Z angle [radians]");
-%bode(Ztf, fs * 2 * pi);
-% 
-% plot(Ztransfer)
-% title("Z axis response transfer function");
-% hold off
-% 
-% plot(InputLog{1}.Values.Data(:,3))
-% hold on
-% plot(OutputLog{1}.Values.Data(:,3))
-% legend("Input","Output")
-% title("Z step function response")
-% hold off
-% 
-% 
-% 
-% %bode(Rtf)
-% %nyquist(Rtf)
