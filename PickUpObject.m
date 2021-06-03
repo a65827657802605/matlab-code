@@ -4,8 +4,8 @@ function PickUpObject(cameraX, cameraY, detectionTime, conveyorSpeed)
     offsetCameraOriginX     = -0.172;                   %[m]
     offsetCameraOriginY     = 0.069;                    %[m]
     robot_to_conveyorbelt   = 0.05;                     %[m] distance from the robot to the conveyorbelt
-    height_conveyorbelt     = 0.10;                     %[m] NEEDS TO BE CHECKED
-    height_bag              = 0.03;                     %[m] NEEDS TO BE CHECKED
+    height_conveyorbelt     = 0.054;                    %[m] NEEDS TO BE CHECKED
+    height_bag              = 0.035;                    %[m] NEEDS TO BE CHECKED
     airborne_height         = 0.05;                     %[m] how high we want to lift it from the ground
     bag_resting_distance    = 0.20;                     %[m] how far away from the centre of the robot the bag will be put
     
@@ -125,7 +125,7 @@ function CheckArccosConstraint(r, h)
                    ( 55 < r < 315 && 246 - sqrt(99225 - r^2) < h < 246 + sqrt(99225 - r^2));
 
     if (~boundsArccos)
-        error("According to the arccos constraint, one of the inputs is out of bounds.")
+        error('According to the arccos constraint, one of the inputs is out of bounds.')
     end
 
 end
@@ -137,12 +137,12 @@ function CheckXZConstraint(X, Z)
 
     if (boundsX)
     else
-        error("Reference angle X is out of bounds")
+        error('Reference angle X is out of bounds')
     end
 
     if (boundsZ)
     else
-        error("Reference angle Z is out of bounds")
+        error('Reference angle Z is out of bounds')
     end
 
 end
@@ -156,8 +156,8 @@ function waypoints = DetermineWaypoints(R, X, Z, Xcontact, Zcontact, Xairborne, 
         %[R; X; Z]
 
         waypoints = [ R, R,        R,        R,         R - pi / 2, R - pi / 2, R - pi / 2, R         ;...
-                     X, Xcontact, Xcontact, Xairborne, Xairborne,  Xdown,      Xairborne,  Xairborne ;...
-                     Z, Zcontact, Zcontact, Zairborne, Zairborne,  Zdown,      Zairborne,  Zairborne ];
+                      X, Xcontact, Xcontact, Xairborne, Xairborne,  Xdown,      Xairborne,  Xairborne ;...
+                      Z, Zcontact, Zcontact, Zairborne, Zairborne,  Zdown,      Zairborne,  Zairborne ];
 
 end
 
